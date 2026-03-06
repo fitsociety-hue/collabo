@@ -74,7 +74,7 @@
             </div>
             <div class="view-actions">
                 <button type="button" class="btn-secondary" id="btn-prev-2">&larr; 이전</button>
-                <button type="button" class="btn-primary" id="btn-submit" disabled>제출 및 분석하기</button>
+                <button type="button" class="btn-primary" id="btn-analyze" disabled>결과 보고서 확인하기</button>
             </div>
         </section>
 
@@ -120,7 +120,18 @@
                 </div>
             </div>
 
-            <div class="view-actions report-actions">
+            <div id="final-submit-container"
+                style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                <p style="margin-bottom: 1rem; font-size: 0.95rem; color: rgba(255,255,255,0.9);">나의 응답 결과를 기관에 최종
+                    제출하시겠습니까?</p>
+                <button type="button" class="btn-primary" id="btn-final-submit"
+                    style="background: linear-gradient(135deg, #4CAF50, #45a049); box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4); width: auto; padding: 12px 30px; border-radius: 30px; font-weight: 700;">응답
+                    최종 제출하기</button>
+                <p id="submit-success-msg" class="hidden"
+                    style="color: #4CAF50; font-weight: bold; margin-top: 15px; font-size: 1.1rem;">✅ 성공적으로 제출되었습니다!</p>
+            </div>
+
+            <div class="view-actions report-actions" style="margin-top: 1.5rem;">
                 <button type="button" class="btn-secondary" id="btn-restart">다시 하기</button>
                 <button type="button" class="btn-primary btn-icon" id="btn-download-pdf">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -136,8 +147,8 @@
 
     </main>
 
-    <script src="data.js?v=1.1"></script>
-    <script src="app.js?v=1.1"></script>
+    <script src="data.js?v=2.1"></script>
+    <script src="app.js?v=2.1"></script>
 </body>
 
 </html>

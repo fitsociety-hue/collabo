@@ -117,6 +117,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const p1Items = getSelectedItems(data.part1, state.selectedPart1);
         const p2Items = getSelectedItems(data.part2, state.selectedPart2);
 
+        // Generate Report
+        generateReport(p1Items, p2Items);
+
+        // Fake delay for realistic feeling
+        setTimeout(() => {
+            showView('report');
+            // Reset final submit UI state when showing report again
+            document.getElementById('btn-final-submit').classList.remove('hidden');
+            document.getElementById('btn-final-submit').disabled = false;
+            document.getElementById('btn-final-submit').textContent = '응답 최종 제출하기';
+            document.getElementById('submit-success-msg').classList.add('hidden');
+        }, 1500);
+    });
+
+    // Final Submit to Google Sheets
+    document.getElementById('btn-final-submit').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-final-submit');
+        const successMsg = document.getElementById('submit-success-msg');
+
+        btn.disabled = true;
+        btn.textContent = '제출 중...';
+
+        const getSelectedItems = (dataSet, ids) => dataSet.filter(d => ids.has(d.id));
+        const p1Items = getSelectedItems(data.part1, state.selectedPart1);
+        const p2Items = getSelectedItems(data.part2, state.selectedPart2);
+
         // Prep payload for Google Sheets
         const payload = {
             timestamp: new Date().toISOString(),
@@ -133,18 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload)
             });
+            // Show success
+            btn.classList.add('hidden');
+            successMsg.classList.remove('hidden');
         } catch (e) {
             console.error("Transmission error/CORS warning:", e);
-            // We proceed to report generation even if transmission fails in dev env
+            alert("제출 중 오류가 발생했습니다. 네트워크 연결을 확인해주세요.");
+            btn.disabled = false;
+            btn.textContent = '응답 최종 제출하기';
         }
-
-        // Generate Report
-        generateReport(p1Items, p2Items);
-
-        // Fake delay for realistic feeling
-        setTimeout(() => {
-            showView('report');
-        }, 1500);
     });
 
     // Report Generation Logic

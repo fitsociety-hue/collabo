@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Views
     const views = {
+        login: document.getElementById('view-admin-login'),
         input: document.getElementById('view-admin-input'),
         report: document.getElementById('view-admin-report')
     };
@@ -24,6 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const allWords = {};
     data.part1.forEach(w => allWords[w.word.trim()] = { ...w, part: 1 });
     data.part2.forEach(w => allWords[w.word.trim()] = { ...w, part: 2 });
+
+    // Login Logic
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('admin-id').value.trim();
+        const pw = document.getElementById('admin-pw').value.trim();
+        const errorEl = document.getElementById('admin-login-error');
+
+        if (id === 'admin' && pw === '1107') {
+            errorEl.classList.add('hidden');
+            showView('input');
+        } else {
+            errorEl.classList.remove('hidden');
+        }
+    });
 
     document.getElementById('btn-analyze-all').addEventListener('click', () => {
         const text = document.getElementById('data-input').value;
