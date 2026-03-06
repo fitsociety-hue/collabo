@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>협업 브릿지 통합 분석 (관리자)</title>
+    <!-- Modern Typography Font (Pretendard) -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="style.css?v=1.2">
+
+    <!-- html2pdf for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="app-background"></div>
+
+    <main id="app-container" class="glass-panel" style="max-width: 800px;">
+        <header class="app-header">
+            <h1 class="app-logo">협업 브릿지 관리자</h1>
+            <p class="app-subtitle">직원 전체 통합 분석</p>
+        </header>
+
+        <!-- View 1: Data Input -->
+        <section id="view-admin-input" class="view active-view">
+            <div class="login-container" style="max-width: 100%;">
+                <h2>스프레드시트 데이터 입력</h2>
+                <p style="text-align: left; margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.5;">
+                    구글 스프레드시트에 수집된 응답 데이터를 전체 복사(Ctrl+C)하여 아래 공간에 붙여넣기(Ctrl+V) 해주세요.<br>
+                    <span style="opacity: 0.7; font-size: 0.85rem;">(시간, 가명, 파트1 선택, 파트2 선택 등 모든 열 포함)</span>
+                </p>
+                <div class="input-group">
+                    <textarea id="data-input" rows="12" placeholder="여기에 엑셀/스프레드시트 데이터를 붙여넣으세요..."
+                        style="width: 100%; padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                <button type="button" class="btn-primary" id="btn-analyze-all" style="margin-top: 1rem;">전체 데이터 통합
+                    분석하기</button>
+            </div>
+        </section>
+
+        <!-- View 2: Aggregated Report -->
+        <section id="view-admin-report" class="view hidden">
+            <div id="report-content" class="report-content">
+                <div class="report-header">
+                    <h2>직원 전체 통합 분석 보고서</h2>
+                    <p>총 분석 대상: <span id="total-participants">0</span>명 (데이터 행 기준)</p>
+                </div>
+
+                <div class="report-section">
+                    <h3>가. 본인/사업팀 차원 - 최다 선택 키워드 TOP 5</h3>
+                    <div class="selected-tags" id="tags-top-part1"></div>
+                </div>
+
+                <div class="report-section">
+                    <h3>나. 복지관 차원 - 최다 선택 키워드 TOP 5</h3>
+                    <div class="selected-tags" id="tags-top-part2"></div>
+                </div>
+
+                <div class="report-section highlight-section">
+                    <h3>다. 전체 맥락 통합 분석</h3>
+                    <p id="analysis-integrated-all" class="analysis-text"></p>
+                </div>
+
+                <div class="report-section">
+                    <h3>라. 향후 제언 및 카테고리별 세부실행 계획</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem;">* 직원들이 가장 많이 선택한 카테고리 순서대로 우선순위가
+                        정렬되어 표시됩니다.</p>
+                    <div id="admin-suggestions-container" class="suggestions-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-actions report-actions">
+                <button type="button" class="btn-secondary" id="btn-restart-admin">다시 입력하기</button>
+                <button type="button" class="btn-primary btn-icon" id="btn-download-pdf">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    PDF로 저장
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="data.js?v=1.2"></script>
+    <script src="admin.js?v=1.2"></script>
+</body>
+
+</html>

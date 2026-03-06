@@ -19,7 +19,7 @@ const data = {
         { id: "p1_15", word: "투명하게 나누는", desc: "성과를 타 부서와 공유", category: "communication" },
         { id: "p1_16", word: "분명한", desc: "사각지대 방지, 역할/경계 명확", category: "system" },
         { id: "p1_17", word: "풍성한", desc: "지역 자원 맵핑을 공유", category: "culture" },
-        { id: "p1_18", word: "적극적인", 복지관: "행사, ESG 등 TF 동참", category: "attitude" },
+        { id: "p1_18", word: "적극적인", desc: "행사, ESG 등 TF 동참", category: "attitude" },
         { id: "p1_19", word: "함께 성장하는", desc: "노하우 나누며 동료 슈퍼비전 실천", category: "culture" },
         { id: "p1_20", word: "수용적인", desc: "주민 의견 수용하는 열린 태도", category: "attitude" }
     ],
