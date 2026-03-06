@@ -162,6 +162,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('admin-suggestions-container').innerHTML = sugHTML;
 
+            // Individual Employee Suggestions
+            let allUserSuggestionsHTML = '';
+            sheetData.slice(1).forEach(row => {
+                const name = row[1] || '익명';
+                const sug1 = row[4] ? String(row[4]).trim() : '';
+                const sug2 = row[5] ? String(row[5]).trim() : '';
+                const sug3 = row[6] ? String(row[6]).trim() : '';
+
+                let userSugs = [];
+                if (sug1) userSugs.push(sug1);
+                if (sug2) userSugs.push(sug2);
+                if (sug3) userSugs.push(sug3);
+
+                if (userSugs.length > 0) {
+                    allUserSuggestionsHTML += `
+                    <div class="suggestion-card" style="border-left: 4px solid #64748b; margin-top: 0; margin-bottom: 0;">
+                        <h4 style="color: #334155; font-size: 0.95rem; margin-bottom: 8px;">👤 참가자: ${name}</h4>
+                        <ul class="action-items" style="color: #475569; font-size: 0.9rem;">
+                            ${userSugs.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                    `;
+                }
+            });
+
+            if (allUserSuggestionsHTML === '') {
+                allUserSuggestionsHTML = '<div style="padding: 15px; color: #64748b; text-align: center; background: white; border-radius: 8px;">제출된 개별 제언이 없습니다. (새로운 데이터부터 반영됩니다)</div>';
+            }
+
+            document.getElementById('admin-user-suggestions-container').innerHTML = allUserSuggestionsHTML;
+
             showView('report');
         } catch (error) {
             console.error(error);
