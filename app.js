@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navigation Buttons
     document.getElementById('btn-next-1').addEventListener('click', () => {
         showView('selection2');
-        renderCards('grid-2', data.part2, state.selectedPart2, 'count-2', 'btn-submit');
+        renderCards('grid-2', data.part2, state.selectedPart2, 'count-2', 'btn-analyze');
     });
 
     document.getElementById('btn-prev-1').addEventListener('click', () => {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Submit and Analyze
-    document.getElementById('btn-submit').addEventListener('click', async () => {
+    document.getElementById('btn-analyze').addEventListener('click', async () => {
         showView('loading');
 
         // 1. Gather mapped Data
