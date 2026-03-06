@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // State
     const state = {
         name: '',
-        group: '',
         selectedPart1: new Set(),
         selectedPart2: new Set()
     };
@@ -80,18 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const nameInput = document.getElementById('login-name').value.trim();
-        const groupInput = document.getElementById('group-select').value;
         const errorEl = document.getElementById('login-error');
 
         // Regex for exactly 3 Korean characters
-        if (!/^[가-힣]{3}$/.test(nameInput) || !groupInput) {
+        if (!/^[가-힣]{3}$/.test(nameInput)) {
             errorEl.classList.remove('hidden');
             return;
         }
 
         errorEl.classList.add('hidden');
         state.name = nameInput;
-        state.group = groupInput;
 
         showView('selection1');
         renderCards('grid-1', data.part1, state.selectedPart1, 'count-1', 'btn-next-1');
@@ -123,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Prep payload for Google Sheets
         const payload = {
             timestamp: new Date().toISOString(),
-            group: state.group,
             name: state.name,
             part1_words: p1Items.map(i => i.word).join(', '),
             part2_words: p2Items.map(i => i.word).join(', ')
@@ -152,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Report Generation Logic
     const generateReport = (p1, p2) => {
-        document.getElementById('report-author').innerText = `${state.group} ${state.name}`;
+        document.getElementById('report-author').innerText = `${state.name}`;
 
         // Render Tags
         const renderTags = (items, elementId) => {
@@ -201,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const element = document.getElementById('report-content');
         const opt = {
             margin: 10,
-            filename: `협업브릿지_결과_${state.group}_${state.name}.pdf`,
+            filename: `협업브릿지_결과_${state.name}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
