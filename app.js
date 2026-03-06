@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedPart2: new Set()
     };
 
-    const WebAppUrl = "https://script.google.com/macros/s/AKfycbwiaWsGbrGicu9pkivWke_XQQRSnbcgC-zKfWtDm8Tr5N9mhU49HhK9t17HkzqQPw93/exec";
+    const WebAppUrl = "https://script.google.com/macros/s/AKfycbxqUkXn3khegMGCc2L78gAAVmGoJo_UOieWheqgooS3BGcfFfYs16iVVlqpoF97Ry-H/exec";
 
     // DOM Elements
     const views = {
