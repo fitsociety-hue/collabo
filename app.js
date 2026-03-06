@@ -75,6 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtonState(nextBtnId, selectionSet.size);
     };
 
+    // Login UI Toggle
+    document.getElementById('btn-show-personal').addEventListener('click', () => {
+        document.querySelector('.login-options').classList.add('hidden');
+        document.getElementById('personal-login-section').classList.remove('hidden');
+    });
+
+    document.getElementById('btn-cancel-personal').addEventListener('click', () => {
+        document.getElementById('personal-login-section').classList.add('hidden');
+        document.querySelector('.login-options').classList.remove('hidden');
+        document.getElementById('login-name').value = '';
+        document.getElementById('login-error').classList.add('hidden');
+    });
+
+    document.getElementById('btn-show-admin').addEventListener('click', () => {
+        window.location.href = 'admin.html';
+    });
+
     // Login Form Submit
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
