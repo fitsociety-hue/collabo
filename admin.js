@@ -35,13 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (id === 'admin' && pw === '1107') {
             errorEl.classList.add('hidden');
+            document.getElementById('btn-admin-logout').classList.remove('hidden'); // Show logout button on successful login
             showView('input');
         } else {
             errorEl.classList.remove('hidden');
         }
     });
 
-    const WebAppUrl = "https://script.google.com/macros/s/AKfycbx1tj_xukQ7GaNw7haeApNNz-Yg-jd_ekP6LvGdPP_1l6rIbQ0tOqmwWQ1gX144Nu0/exec";
+    const WebAppUrl = "https://script.google.com/macros/s/AKfycbwiaWsGbrGicu9pkivWke_XQQRSnbcgC-zKfWtDm8Tr5N9mhU49HhK9t17HkzqQPw93/exec";
 
     document.getElementById('btn-analyze-all').addEventListener('click', async () => {
         const btn = document.getElementById('btn-analyze-all');
@@ -172,8 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-restart-admin').addEventListener('click', () => {
-        document.getElementById('data-input').value = '';
+        if (document.getElementById('data-input')) {
+            document.getElementById('data-input').value = '';
+        }
         showView('input');
+    });
+
+    document.getElementById('btn-admin-logout').addEventListener('click', () => {
+        document.getElementById('admin-id').value = '';
+        document.getElementById('admin-pw').value = '';
+        document.getElementById('btn-admin-logout').classList.add('hidden');
+        showView('login');
+    });
+
+    document.getElementById('btn-print-report').addEventListener('click', () => {
+        window.print();
     });
 
     // PDF Download
