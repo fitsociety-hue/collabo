@@ -78,7 +78,7 @@
         <!-- View 2: Selection 1 (Personal & Team) -->
         <section id="view-selection-1" class="view hidden">
             <div class="selection-header">
-                <span class="step-indicator">Step 1 of 2</span>
+                <span class="step-indicator">Step 1 of 3</span>
                 <h2>본인 및 사업팀 차원의 노력</h2>
                 <p>협업을 위해 스스로 갖추어야 할 태도와 업무 방식입니다. <br><strong>가장 중요하다고 생각하는 5개 이상</strong>을 선택해주세요.</p>
                 <div class="selection-counter"><span id="count-1">0</span> / 최소 5개</div>
@@ -95,7 +95,7 @@
         <!-- View 3: Selection 2 (Center Level) -->
         <section id="view-selection-2" class="view hidden">
             <div class="selection-header">
-                <span class="step-indicator">Step 2 of 2</span>
+                <span class="step-indicator">Step 2 of 3</span>
                 <h2>복지관 차원의 변화 및 지원</h2>
                 <p>직원들을 돕기 위해 복지관 시스템이 나아가야 할 모습입니다. <br><strong>가장 중요하다고 생각하는 5개 이상</strong>을 선택해주세요.</p>
                 <div class="selection-counter"><span id="count-2">0</span> / 최소 5개</div>
@@ -105,6 +105,45 @@
             </div>
             <div class="view-actions">
                 <button type="button" class="btn-secondary" id="btn-prev-2">&larr; 이전</button>
+                <button type="button" class="btn-primary" id="btn-next-2" disabled>다음 &rarr;</button>
+            </div>
+        </section>
+
+        <!-- View 4: Selection 3 (Suggestions) -->
+        <section id="view-selection-3" class="view hidden">
+            <div class="selection-header">
+                <span class="step-indicator">Step 3 of 3</span>
+                <h2>복지관 협업을 위한 제언</h2>
+                <p>복지관의 원활한 소통과 협업을 위한 하고 싶은 이야기를 자유롭게 작성해 주십시오.</p>
+            </div>
+            <div class="suggestions-form"
+                style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 2rem;">
+                <div class="input-group">
+                    <label for="suggestion-1"
+                        style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-main); font-size: 0.95rem;">제언
+                        1 <span style="color: #EF4444;">*</span></label>
+                    <textarea id="suggestion-1" rows="3" placeholder="필수 항목입니다." required
+                        style="width: 100%; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="suggestion-2"
+                        style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-main); font-size: 0.95rem;">제언
+                        2 <span
+                            style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem;">(선택)</span></label>
+                    <textarea id="suggestion-2" rows="3" placeholder="선택 항목입니다."
+                        style="width: 100%; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="suggestion-3"
+                        style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-main); font-size: 0.95rem;">제언
+                        3 <span
+                            style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem;">(선택)</span></label>
+                    <textarea id="suggestion-3" rows="3" placeholder="선택 항목입니다."
+                        style="width: 100%; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+            </div>
+            <div class="view-actions">
+                <button type="button" class="btn-secondary" id="btn-prev-3">&larr; 이전</button>
                 <button type="button" class="btn-primary" id="btn-analyze" disabled>결과 보고서 확인하기</button>
             </div>
         </section>
@@ -138,13 +177,22 @@
                     <div class="selected-tags" id="tags-part2"></div>
                 </div>
 
-                <div class="report-section highlight-section">
-                    <h3>다. 전체 맥락 통합 분석</h3>
+                <div class="report-section highlight-section"
+                    style="margin-top: 1.5rem; border-top: 1px solid rgba(148, 163, 184, 0.2); padding-top: 1.5rem;">
+                    <h3>다. 복지관 협업을 위한 제언</h3>
+                    <div id="report-suggestions"
+                        style="margin-top: 1rem; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>라. 전체 맥락 통합 분석</h3>
                     <p id="analysis-integrated" class="analysis-text"></p>
                 </div>
 
                 <div class="report-section">
-                    <h3>라. 향후 제언 및 세부실행 계획</h3>
+                    <h3>마. 향후 추천 및 세부실행 계획</h3>
                     <div id="suggestions-container" class="suggestions-container">
                         <!-- Populated by JS -->
                     </div>
@@ -152,8 +200,8 @@
             </div>
 
             <div id="final-submit-container"
-                style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
-                <p style="margin-bottom: 1rem; font-size: 0.95rem; color: rgba(255,255,255,0.9);">나의 응답 결과를 기관에 최종
+                style="margin-top: 2rem; padding-top: 2rem; border-top: 1px dashed rgba(148, 163, 184, 0.3); text-align: center;">
+                <p style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-muted);">나의 응답 결과를 기관에 최종
                     제출하시겠습니까?</p>
                 <button type="button" class="btn-primary" id="btn-final-submit"
                     style="background: linear-gradient(135deg, #4CAF50, #45a049); box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4); width: auto; padding: 12px 30px; border-radius: 30px; font-weight: 700;">응답

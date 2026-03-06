@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         name: '',
         selectedPart1: new Set(),
-        selectedPart2: new Set()
+        selectedPart2: new Set(),
+        suggestions: ["", "", ""]
     };
 
     const WebAppUrl = "https://script.google.com/macros/s/AKfycbxqUkXn3khegMGCc2L78gAAVmGoJo_UOieWheqgooS3BGcfFfYs16iVVlqpoF97Ry-H/exec";
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         login: document.getElementById('view-login'),
         selection1: document.getElementById('view-selection-1'),
         selection2: document.getElementById('view-selection-2'),
+        selection3: document.getElementById('view-selection-3'),
         loading: document.getElementById('view-loading'),
         report: document.getElementById('view-report')
     };
@@ -114,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navigation Buttons
     document.getElementById('btn-next-1').addEventListener('click', () => {
         showView('selection2');
-        renderCards('grid-2', data.part2, state.selectedPart2, 'count-2', 'btn-analyze');
+        renderCards('grid-2', data.part2, state.selectedPart2, 'count-2', 'btn-next-2');
     });
 
     document.getElementById('btn-prev-1').addEventListener('click', () => {
@@ -125,8 +127,29 @@ document.addEventListener('DOMContentLoaded', () => {
         showView('selection1');
     });
 
+    document.getElementById('btn-next-2').addEventListener('click', () => {
+        showView('selection3');
+    });
+
+    document.getElementById('btn-prev-3').addEventListener('click', () => {
+        showView('selection2');
+    });
+
+    // Suggestion Validator
+    const btnAnalyze = document.getElementById('btn-analyze');
+    document.getElementById('suggestion-1').addEventListener('input', (e) => {
+        btnAnalyze.disabled = e.target.value.trim().length === 0;
+    });
+
     // Submit and Analyze
-    document.getElementById('btn-analyze').addEventListener('click', async () => {
+    btnAnalyze.addEventListener('click', async () => {
+        // Capture suggestions
+        state.suggestions = [
+            document.getElementById('suggestion-1').value.trim(),
+            document.getElementById('suggestion-2').value.trim(),
+            document.getElementById('suggestion-3').value.trim()
+        ];
+
         showView('loading');
 
         // 1. Gather mapped Data
@@ -165,7 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
             timestamp: new Date().toISOString(),
             name: state.name,
             part1_words: p1Items.map(i => i.word).join(', '),
-            part2_words: p2Items.map(i => i.word).join(', ')
+            part2_words: p2Items.map(i => i.word).join(', '),
+            suggestion1: state.suggestions[0],
+            suggestion2: state.suggestions[1],
+            suggestion3: state.suggestions[2]
         };
 
         try {
@@ -217,6 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dominantCategory = getTopCategory([...p1, ...p2]);
         document.getElementById('analysis-integrated').innerHTML = data.analysis.integratedTpl(data.analysis.categories[dominantCategory]);
+
+        // Inject Custom Suggestions
+        let validSuggestions = 0;
+        const customSugHTML = state.suggestions.map((s, idx) => {
+            if (!s) return '';
+            validSuggestions++;
+            return `
+            <div style="background: rgba(148, 163, 184, 0.05); padding: 12px 15px; border-radius: 8px; border: 1px dashed rgba(148, 163, 184, 0.3); margin-bottom: 8px;">
+                <span style="font-weight: bold; color: var(--primary); margin-right: 8px;">제언 ${idx + 1}.</span> <span style="color: var(--text-main); line-height: 1.5;">${s}</span>
+            </div>
+            `;
+        }).join('');
+        document.getElementById('report-suggestions').innerHTML = validSuggestions > 0 ? customSugHTML : '<p style="color: var(--text-muted); font-size: 0.9rem;">입력된 제언이 없습니다.</p>';
 
         // Inject Suggestions
         const sugs = data.analysis.suggestions[dominantCategory];
