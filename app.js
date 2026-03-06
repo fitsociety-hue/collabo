@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestions: ["", "", ""]
     };
 
-    const WebAppUrl = "https://script.google.com/macros/s/AKfycbxqUkXn3khegMGCc2L78gAAVmGoJo_UOieWheqgooS3BGcfFfYs16iVVlqpoF97Ry-H/exec";
+    const WebAppUrl = "https://script.google.com/macros/s/AKfycbzmVT1zV5iPHGow4OVMtEuFvxOn1XHZhnlok99kx1qL8jDE1hRuwA35WshPHKw91upb/exec";
 
     // DOM Elements
     const views = {
